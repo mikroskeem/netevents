@@ -1,6 +1,6 @@
 <!--
 
-    Copyright (C) 2014 zml (netevents@zachsthings.com)
+    Copyright (C) 2016 mikroskeem (mikroskeem@mikroskeem.eu)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -21,13 +21,13 @@
 
   <groupId>com.zachsthings</groupId>
   <artifactId>netevents</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>NetEvents</name>
   <url>http://zachsthings.com</url>
   <description>A plugin that allows Bukkit servers to send events over the network</description>
-  <inceptionYear>2014</inceptionYear>
+  <inceptionYear>2016</inceptionYear>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,8 +35,8 @@
 
   <repositories>
     <repository>
-      <id>bukkit-repo</id>
-      <url>http://repo.bukkit.org/content/groups/public/</url>
+        <id>spigot-repo</id>
+        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
   </repositories>
 
@@ -50,7 +50,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.7.2-R0.1</version>
+      <version>1.9.2-R0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
@@ -71,8 +71,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.5.1</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
@@ -82,9 +82,9 @@
         <configuration>
           <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
           <properties>
-            <owner>zml</owner>
+            <owner>mikroskeem</owner>
             <year>${project.inceptionYear}</year>
-            <email>netevents@zachsthings.com</email>
+            <email>mikroskeem@mikroskeem.eu</email>
           </properties>
           <excludes>
             <exclude>**/README</exclude>
