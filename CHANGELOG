@@ -1,3 +1,9 @@
+## 1.2 ##
+
+- Update to Bukkit 1.9.2 API
+- Fix unexpected connecting to default server provided
+  in config.yml when no other servers are listed
+
 ## 1.0 ##
 
 - Initial release
