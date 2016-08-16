@@ -66,13 +66,14 @@ public class NetEventsPlugin extends JavaPlugin {
         }
 
         socketWrapper = new AESSocketWrapper(config.getPassphrase());
-        try {
-            connect();
-        } catch (IOException e) {
-            getLogger().log(Level.SEVERE, "Error while connecting to remote servers. Are your addresses entered correctly?", e);
-            getPluginLoader().disablePlugin(this);
-            return;
-        }
+        /* Connect to servers */
+        getServer().getScheduler().runTaskAsynchronously(this, ()->{
+            try {
+                connect();
+            } catch (IOException e) {
+                getLogger().log(Level.SEVERE, "Error while connecting to remote servers. Are your addresses entered correctly?", e);
+            }
+        });
         getCommand("netevents").setExecutor(new StatusCommand(this));
 
         debugMode = config.defaultDebugMode();
