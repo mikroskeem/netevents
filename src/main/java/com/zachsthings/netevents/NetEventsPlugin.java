@@ -19,8 +19,6 @@ import com.zachsthings.netevents.packet.EventPacket;
 import com.zachsthings.netevents.sec.AESSocketWrapper;
 import com.zachsthings.netevents.sec.SocketWrapper;
 import com.zachsthings.netevents.ping.PingListener;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -69,7 +67,7 @@ public class NetEventsPlugin extends JavaPlugin {
         try {
             connect();
         } catch (IOException e) {
-            getLogger().log(Level.SEVERE, "Error while connecting to remote servers. Are your addresses entered correctly?", e);
+            getLogger().log(Level.SEVERE, "Failed to bind given address!", e);
             getPluginLoader().disablePlugin(this);
             return;
         }
@@ -124,17 +122,18 @@ public class NetEventsPlugin extends JavaPlugin {
             receiver = new Receiver(this, config.getListenAddress());
             receiver.bind();
         }
-
-        for (SocketAddress addr : config.getConnectAddresses()) {
-            Forwarder fwd = new Forwarder(this);
-            try {
-                fwd.connect(addr);
-            } catch (IOException ex) {
-                reconnectTask.schedule(fwd);
-                getLogger().log(Level.SEVERE, "Unable to connect to remote server " + addr + " (will keep trying): " + ex);
+        getServer().getScheduler().runTaskAsynchronously(this, ()->{
+            for (SocketAddress addr : config.getConnectAddresses()) {
+                Forwarder fwd = new Forwarder(this);
+                try {
+                    fwd.connect(addr);
+                } catch (IOException ex) {
+                    reconnectTask.schedule(fwd);
+                    getLogger().log(Level.SEVERE, "Unable to connect to remote server " + addr + " (will keep trying): " + ex);
+                }
+                addForwarder(fwd);
             }
-            addForwarder(fwd);
-        }
+        });
     }
 
     /**
