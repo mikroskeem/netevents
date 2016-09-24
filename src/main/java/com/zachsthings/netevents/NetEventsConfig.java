@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2016 mikroskeem (mikroskeem@mikroskeem.eu)
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,9 +27,9 @@ import java.util.List;
  * Contains the immutable data from one configuration instance.
  */
 public class NetEventsConfig {
-	/**
-	 * The default port NetEvents listens at and connects to when no other is specified
-	 */
+    /**
+     * The default port NetEvents listens at and connects to when no other is specified
+     */
     public static final int DEFAULT_PORT = 25566;
     private final SocketAddress listenAddress;
     private final List<SocketAddress> connectAddresses = new ArrayList<>();
@@ -47,29 +47,29 @@ public class NetEventsConfig {
         passphrase = config.getString("passphrase");
     }
 
-	/**
-	 * Return the address NetEvents should listen at for incoming connections.
-	 *
-	 * @return The address to listen at
-	 */
+    /**
+     * Return the address NetEvents should listen at for incoming connections.
+     *
+     * @return The address to listen at
+     */
     public SocketAddress getListenAddress() {
         return listenAddress;
     }
 
-	/**
-	 * Return the addresses this instance of NetEvents will attempt to connect to.
-	 *
-	 * @return The addresses to connect to
-	 */
+    /**
+     * Return the addresses this instance of NetEvents will attempt to connect to.
+     *
+     * @return The addresses to connect to
+     */
     public List<SocketAddress> getConnectAddresses() {
         return Collections.unmodifiableList(connectAddresses);
     }
 
-	/**
-	 * Returns whether debug mode should be enabled by default
-	 *
-	 * @return debug mode enabled by default?
-	 */
+    /**
+     * Returns whether debug mode should be enabled by default
+     *
+     * @return debug mode enabled by default?
+     */
     public boolean defaultDebugMode() {
         return defaultDebugMode;
     }
