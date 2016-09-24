@@ -3,6 +3,9 @@ version: "${project.version}"
 description: "${project.description}"
 load: STARTUP
 main: com.zachsthings.netevents.NetEventsPlugin
+authors:
+- mikroskeem
+- zml2008
 commands:
     netevents:
         description: status report on netevents
