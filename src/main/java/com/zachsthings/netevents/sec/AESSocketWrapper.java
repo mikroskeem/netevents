@@ -28,6 +28,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -41,20 +42,22 @@ import java.security.spec.KeySpec;
  * Socket wrapper that provides an encrypted channel
  */
 public class AESSocketWrapper implements SocketWrapper {
-    private static final byte[] SALT = new byte[]{8, 12, 16, 84, 98, 93, 92, 23, 38, 3};
     private static final int ITER_COUNT = 1024, KEY_LEN = 128;
     private final String passphrase;
+    private final String salt;
 
 
-    public AESSocketWrapper(String passphrase) {
+    public AESSocketWrapper(String passphrase, String salt) {
         this.passphrase = passphrase;
+        this.salt = salt;
     }
 
     @Override
     public SocketChannel wrapSocket(SocketChannel chan) throws IOException {
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            KeySpec spec = new PBEKeySpec(passphrase.toCharArray(), SALT, ITER_COUNT, KEY_LEN);
+            KeySpec spec = new PBEKeySpec(passphrase.toCharArray(), salt.getBytes(StandardCharsets.UTF_8),
+                    ITER_COUNT, KEY_LEN);
             SecretKey secretKey = factory.generateSecret(spec);
             Key key = new SecretKeySpec(secretKey.getEncoded(), "AES");
             AlgorithmParameters params = AlgorithmParameters.getInstance("AES");

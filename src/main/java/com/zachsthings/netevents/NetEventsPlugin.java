@@ -63,7 +63,7 @@ public class NetEventsPlugin extends JavaPlugin {
             return;
         }
 
-        socketWrapper = new AESSocketWrapper(config.getPassphrase());
+        socketWrapper = new AESSocketWrapper(config.getPassphrase(), config.getSalt());
         try {
             connect();
         } catch (IOException e) {
