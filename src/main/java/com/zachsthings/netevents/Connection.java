@@ -78,9 +78,7 @@ class Connection implements Closeable {
         out.interrupt();
         in.interrupt();
         if (disconnectHandled.compareAndSet(false, true)) {
-            for (Runnable r : closeListeners) {
-                r.run();
-            }
+            closeListeners.forEach(Runnable::run);
         }
     }
 
