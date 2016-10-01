@@ -57,8 +57,9 @@ public class NetEventsPlugin extends JavaPlugin {
         reconnectTask = new ReconnectTask();
         getServer().getScheduler().runTaskTimerAsynchronously(this, reconnectTask, 0, 20);
         reloadConfig();
-        if (config.getPassphrase().equals("changeme")) {
-            getLogger().severe("Passphrase has not been changed from default! NetEvents will not enable until this happens");
+        if (config.getPassphrase().equals("changeme") || config.getSalt().equals("changemetoo")) {
+            getLogger().severe("Passphrase and/or has not been changed from default!");
+            getLogger().severe("NetEvents will not enable until this happens");
             getPluginLoader().disablePlugin(this);
             return;
         }
