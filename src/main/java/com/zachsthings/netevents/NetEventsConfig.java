@@ -22,6 +22,7 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Contains the immutable data from one configuration instance.
@@ -41,9 +42,9 @@ public class NetEventsConfig {
         listenAddress = toSocketAddr(config.getString("listen-at"));
 
         final List<String> forwardAddresses = config.getStringList("forward-to");
-        for (String forwardTo : forwardAddresses) {
-            connectAddresses.add(toSocketAddr(forwardTo));
-        }
+        connectAddresses.addAll(forwardAddresses.stream()
+                .map(this::toSocketAddr)
+                .collect(Collectors.toList()));
         defaultDebugMode = config.getBoolean("debug");
         passphrase = config.getString("passphrase");
         salt = config.getString("salt");

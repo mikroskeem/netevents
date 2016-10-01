@@ -16,7 +16,6 @@
 package com.zachsthings.netevents;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -35,7 +34,7 @@ class ReconnectTask implements Runnable {
     }
 
     private final AtomicBoolean runAllNext = new AtomicBoolean();
-    private final LinkedList<ReconnectItem> taskQueue = new LinkedList<ReconnectItem>();
+    private final LinkedList<ReconnectItem> taskQueue = new LinkedList<>();
     private final Random rng = new Random();
 
     @Override
