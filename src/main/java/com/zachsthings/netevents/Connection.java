@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2016 mikroskeem (mikroskeem@mikroskeem.eu)
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,7 +29,6 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
 
 /**
  * Represents a single connection. {@link Forwarder} wraps connection for reconnecting, but once this is closed it's closed permanently.
@@ -50,7 +49,7 @@ class Connection implements Closeable {
         this.chan = chan;
         this.remoteAddress = chan.getRemoteAddress();
         if (remoteAddress == null) {
-            throw new IOException("Null remote address for " + chan);
+            throw new IOException(String.format("Null remote address for %s", chan));
         }
     }
 
@@ -124,11 +123,8 @@ class Connection implements Closeable {
 
     @Override
     public String toString() {
-        return "Connection{" +
-                "closeListeners=" + closeListeners +
-                ", chan=" + chan +
-                ", disconnectHandled=" + disconnectHandled +
-                '}';
+        return String.format("Connection{closeListeners=%s, chan=%s, disconnectHandled=%s}",
+                closeListeners, chan, disconnectHandled);
     }
 
     private static class PacketEntry {
@@ -217,21 +213,23 @@ class Connection implements Closeable {
                     case Opcodes.PASS_EVENT:
                         packet = EventPacket.read(payload);
                         if (packet == null) {
-                            getPlugin().debug("Unknown event received from " + conn.getRemoteAddress());
+                            getPlugin().debug(String.format("Unknown event received from %s", conn.getRemoteAddress()));
                         }
                         break;
                     case Opcodes.DISCONNECT:
                         packet = DisconnectPacket.read(payload);
                         break;
                     default:
-                        throw new IOException("Unknown opcode " + opcode + " received");
+                        throw new IOException(String.format("Unknown opcode %s received", opcode));
                 }
                 if (packet != null) {
-                    getPlugin().debug("Received packet " + packet + " from " + conn.getRemoteAddress());
+                    getPlugin().debug(String.format("Received packet %s from %s", packet, conn.getRemoteAddress()));
                     getPlugin().getHandlerQueue().queuePacket(packet, attachment);
                 }
             } catch (Exception e) {
-                getPlugin().getLogger().log(Level.SEVERE, "Unable to read packet (id " + opcode + ") from " + conn.getRemoteAddress() + ", skipping", e);
+                getPlugin().getLogger().severe(String.format(
+                        "Unable to read packet (id %s) from %s, skipping %s", opcode, conn.getRemoteAddress(), e
+                ));
             }
         }
     }

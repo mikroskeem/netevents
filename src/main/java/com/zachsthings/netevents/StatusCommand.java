@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2016 mikroskeem (mikroskeem@mikroskeem.eu)
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -58,12 +58,12 @@ class StatusCommand implements CommandExecutor {
             sender.sendMessage(text("Connected servers:"));
             for (Forwarder f : plugin.getForwarders()) {
                 if (f.isActive()) {
-                    sender.sendMessage(text("- ", hl(f.getRemoteAddress().toString())));
+                    sender.sendMessage(text(String.format("- %s", hl(f.getRemoteAddress().toString()))));
                 } else if (f.getRemoteAddress() != null) {
-                    sender.sendMessage(text("- ", ChatColor.RED + f.getRemoteAddress().toString()));
+                    sender.sendMessage(text(String.format("- %s%s", ChatColor.RED, f.getRemoteAddress().toString())));
                 }
             }
-            sender.sendMessage(error("Usage: /" + label + " <reload|tryconnect|ping|debug>"));
+            sender.sendMessage(error(String.format("Usage: /%s <reload|tryconnect|ping|debug>", label)));
         } else {
             final String commandLabel = args[0];
             if (commandLabel.equals("reload")) {
